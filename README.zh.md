@@ -34,28 +34,18 @@ npm run build
 
 添加到 `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
-**通过 npm 全局安装:**
 ```json
 {
   "mcpServers": {
     "delphi-docs": {
-      "command": "delphi-doc-mcp"
+      "command": "npx",
+      "args": ["delphi-doc-mcp@latest"]
     }
   }
 }
 ```
 
-**从源码安装:**
-```json
-{
-  "mcpServers": {
-    "delphi-docs": {
-      "command": "node",
-      "args": ["/你的路径/delphi-doc-mcp/dist/index.js"]
-    }
-  }
-}
-```
+> **注意**: 首次运行时自动爬取文档（约2-5分钟）。数据缓存在 `~/.delphi-doc-mcp/`。
 
 ## 🧰 可用工具
 

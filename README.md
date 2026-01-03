@@ -34,28 +34,18 @@ npm run build
 
 Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
-**If installed via npm (global):**
 ```json
 {
   "mcpServers": {
     "delphi-docs": {
-      "command": "delphi-doc-mcp"
+      "command": "npx",
+      "args": ["delphi-doc-mcp@latest"]
     }
   }
 }
 ```
 
-**If installed from source:**
-```json
-{
-  "mcpServers": {
-    "delphi-docs": {
-      "command": "node",
-      "args": ["/path/to/delphi-doc-mcp/dist/index.js"]
-    }
-  }
-}
-```
+> **Note**: On first run, the server will automatically crawl documentation (~2-5 minutes). Data is cached in `~/.delphi-doc-mcp/`.
 
 ## 🧰 Available Tools
 
