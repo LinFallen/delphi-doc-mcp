@@ -43,9 +43,11 @@ Before using, crawl the documentation:
 # Crawl DevExpress VCL documentation
 npm run crawl:devexpress
 
-# (Future) Crawl RAD Studio VCL documentation
-npm run crawl:vcl
+# Crawl Free Pascal RTL (Delphi VCL alternative)
+npm run crawl:fpc
 ```
+
+> **Note**: RAD Studio DocWiki is protected by Cloudflare and cannot be accessed by headless browsers. Free Pascal RTL provides compatible core classes (TComponent, TList, TStream, etc.).
 
 ## 🧰 Available Tools
 
