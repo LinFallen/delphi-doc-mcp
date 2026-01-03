@@ -30,32 +30,32 @@ npm run build
 
 > **Note**: On first run, the server will automatically crawl documentation. This takes a few minutes but only happens once. Data is stored in `~/.delphi-doc-mcp/`.
 
-**Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+### Configure Claude Desktop
 
+Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
+
+**If installed via npm (global):**
 ```json
 {
   "mcpServers": {
     "delphi-docs": {
-      "command": "node",
-      "args": ["/path/to/Delphi-Doc-Mcp/dist/index.js"]
+      "command": "delphi-doc-mcp"
     }
   }
 }
 ```
 
-### Populate Documentation
-
-Before using, crawl the documentation:
-
-```bash
-# Crawl DevExpress VCL documentation
-npm run crawl:devexpress
-
-# Crawl Free Pascal RTL (Delphi VCL alternative)
-npm run crawl:fpc
+**If installed from source:**
+```json
+{
+  "mcpServers": {
+    "delphi-docs": {
+      "command": "node",
+      "args": ["/path/to/delphi-doc-mcp/dist/index.js"]
+    }
+  }
+}
 ```
-
-> **Note**: RAD Studio DocWiki is protected by Cloudflare and cannot be accessed by headless browsers. Free Pascal RTL provides compatible core classes (TComponent, TList, TStream, etc.).
 
 ## 🧰 Available Tools
 

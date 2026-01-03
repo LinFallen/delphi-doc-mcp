@@ -30,29 +30,31 @@ npm run build
 
 > **注意**: 首次运行时，服务器会自动爬取文档数据。这需要几分钟，但只会执行一次。数据存储在 `~/.delphi-doc-mcp/`。
 
-**Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+### 配置 Claude Desktop
 
+添加到 `~/Library/Application Support/Claude/claude_desktop_config.json`:
+
+**通过 npm 全局安装:**
 ```json
 {
   "mcpServers": {
     "delphi-docs": {
-      "command": "node",
-      "args": ["/你的路径/Delphi-Doc-Mcp/dist/index.js"]
+      "command": "delphi-doc-mcp"
     }
   }
 }
 ```
 
-### 爬取文档
-
-使用前需要先爬取文档数据：
-
-```bash
-# 爬取 DevExpress VCL 文档
-npm run crawl:devexpress
-
-# 爬取 Free Pascal RTL (Delphi VCL 替代)
-npm run crawl:fpc
+**从源码安装:**
+```json
+{
+  "mcpServers": {
+    "delphi-docs": {
+      "command": "node",
+      "args": ["/你的路径/delphi-doc-mcp/dist/index.js"]
+    }
+  }
+}
 ```
 
 ## 🧰 可用工具
