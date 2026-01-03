@@ -1,14 +1,21 @@
 {
   "name": "delphi-doc-mcp",
   "version": "1.0.0",
-  "description": "MCP server for Delphi documentation (RAD Studio VCL & DevExpress VCL)",
+  "description": "MCP server for Delphi documentation (DevExpress VCL & Free Pascal RTL)",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
     "delphi-doc-mcp": "./dist/index.js"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "README.zh.md",
+    "doc"
+  ],
   "scripts": {
     "build": "tsc",
+    "prepublishOnly": "npm run build",
     "dev": "tsx src/index.ts",
     "crawl:devexpress": "tsx src/crawler/run-devexpress.ts",
     "crawl:vcl": "tsx src/crawler/run-vcl.ts",
@@ -19,21 +26,34 @@
   },
   "keywords": [
     "mcp",
+    "model-context-protocol",
     "delphi",
     "vcl",
     "devexpress",
+    "freepascal",
     "documentation",
     "ai",
-    "claude"
+    "claude",
+    "llm"
   ],
-  "author": "",
+  "author": "LinFallen",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LinFallen/delphi-doc-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LinFallen/delphi-doc-mcp/issues"
+  },
+  "homepage": "https://github.com/LinFallen/delphi-doc-mcp#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
     "axios": "^1.7.0",
     "cheerio": "^1.0.0",
     "fs-extra": "^11.2.0",
-    "lunr": "^2.3.9",
+    "lunr": "^2.3.9"
+  },
+  "optionalDependencies": {
     "puppeteer": "^24.34.0"
   },
   "devDependencies": {

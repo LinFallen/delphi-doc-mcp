@@ -15,12 +15,20 @@
 
 ### 安装
 
+**从 npm 安装（推荐）:**
 ```bash
+npm install -g delphi-doc-mcp
+```
+
+**从源码安装:**
+```bash
+git clone https://github.com/LinFallen/delphi-doc-mcp.git
+cd delphi-doc-mcp
 npm install
 npm run build
 ```
 
-### 配置 MCP 客户端
+> **注意**: 首次运行时，服务器会自动爬取文档数据。这需要几分钟，但只会执行一次。数据存储在 `~/.delphi-doc-mcp/`。
 
 **Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json`):
 

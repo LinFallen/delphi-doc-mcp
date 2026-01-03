@@ -15,12 +15,20 @@ A **Model Context Protocol (MCP)** server that provides seamless access to Delph
 
 ### Installation
 
+**From npm (recommended):**
 ```bash
+npm install -g delphi-doc-mcp
+```
+
+**From source:**
+```bash
+git clone https://github.com/LinFallen/delphi-doc-mcp.git
+cd delphi-doc-mcp
 npm install
 npm run build
 ```
 
-### Configure Your MCP Client
+> **Note**: On first run, the server will automatically crawl documentation. This takes a few minutes but only happens once. Data is stored in `~/.delphi-doc-mcp/`.
 
 **Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json`):
 

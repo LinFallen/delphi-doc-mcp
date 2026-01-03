@@ -15,10 +15,12 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { LunrIndexer } from '../indexer/lunr-indexer.js';
 import { ClassDoc, DocSource, CurrentContext } from '../model/types.js';
+import { AutoCrawler, getDefaultDirs } from './auto-crawler.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PROJECT_ROOT = path.resolve(__dirname, '../..');
-const DOCS_DIR = path.join(PROJECT_ROOT, 'docs');
+
+// Use user home directory for data storage
+const { docsDir: DOCS_DIR, cacheDir: CACHE_DIR } = getDefaultDirs();
 
 // MCP 工具定义
 const TOOLS: Tool[] = [
@@ -176,6 +178,17 @@ export class DelphiDocMcpServer {
 
     private async ensureInitialized(): Promise<void> {
         if (!this.initialized) {
+            // Auto-crawl if docs are missing
+            const autoCrawler = new AutoCrawler({
+                docsDir: DOCS_DIR,
+                cacheDir: CACHE_DIR,
+                sources: ['fpc', 'devexpress'],
+            });
+
+            if (await autoCrawler.needsCrawl()) {
+                await autoCrawler.crawl((msg) => console.error(msg));
+            }
+
             console.error('Building index...');
             await this.indexer.buildIndex(DOCS_DIR);
             this.initialized = true;
