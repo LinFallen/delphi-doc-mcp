@@ -22,7 +22,7 @@ export class FpcCrawler extends BaseCrawler {
      * 执行完整爬取
      */
     async crawl(): Promise<void> {
-        console.log('Starting Free Pascal RTL documentation crawl...');
+        console.error('Starting Free Pascal RTL documentation crawl...');
 
         // 优先爬取的重要单元 (与 Delphi VCL 最兼容)
         const priorityUnits = [
@@ -33,14 +33,14 @@ export class FpcCrawler extends BaseCrawler {
         ];
 
         for (const unit of priorityUnits) {
-            console.log(`\nProcessing unit: ${unit.name}`);
+            console.error(`\nProcessing unit: ${unit.name}`);
 
             try {
                 // 获取类列表页
                 const classListUrl = unit.url.replace('index.html', 'index-4.html');
                 const classListHtml = await this.fetchPage(classListUrl);
                 const classes = this.parser.parseClassList(classListHtml, classListUrl);
-                console.log(`  Found ${classes.length} classes`);
+                console.error(`  Found ${classes.length} classes`);
 
                 // 爬取每个类
                 for (const cls of classes) {
@@ -58,7 +58,7 @@ export class FpcCrawler extends BaseCrawler {
             }
         }
 
-        console.log('\nFree Pascal RTL crawl complete!');
+        console.error('\nFree Pascal RTL crawl complete!');
     }
 
     /**

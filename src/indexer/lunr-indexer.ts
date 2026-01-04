@@ -29,7 +29,7 @@ export class LunrIndexer {
             }
         }
 
-        console.log(`Loaded ${docs.length} documents for indexing`);
+        console.error(`Loaded ${docs.length} documents for indexing`);
 
         // 存储文档和单元信息
         for (const doc of docs) {
@@ -69,7 +69,7 @@ export class LunrIndexer {
             }
         });
 
-        console.log('Index built successfully');
+        console.error('Index built successfully');
     }
 
     /**

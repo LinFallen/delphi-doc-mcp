@@ -21,19 +21,19 @@ export class DevExpressCrawler extends BaseCrawler {
      * 执行完整爬取
      */
     async crawl(): Promise<void> {
-        console.log('Starting DevExpress VCL documentation crawl...');
+        console.error('Starting DevExpress VCL documentation crawl...');
 
         // 1. 获取控件库列表
         const libraries = await this.getLibraries();
-        console.log(`Found ${libraries.length} libraries`);
+        console.error(`Found ${libraries.length} libraries`);
 
         // 2. 遍历每个库获取类列表
         for (const lib of libraries) {
-            console.log(`\nProcessing library: ${lib.name}`);
+            console.error(`\nProcessing library: ${lib.name}`);
 
             try {
                 const classes = await this.getClassList(lib.url);
-                console.log(`  Found ${classes.length} classes`);
+                console.error(`  Found ${classes.length} classes`);
 
                 // 3. 爬取每个类的文档
                 for (const cls of classes) {
@@ -51,7 +51,7 @@ export class DevExpressCrawler extends BaseCrawler {
             }
         }
 
-        console.log('\nDevExpress crawl complete!');
+        console.error('\nDevExpress crawl complete!');
     }
 
     /**
@@ -62,11 +62,41 @@ export class DevExpressCrawler extends BaseCrawler {
     }
 
     /**
-     * 获取库列表
+     * 获取库列表 - 从多个入口页面收集
      */
     private async getLibraries(): Promise<{ name: string; url: string }[]> {
-        const html = await this.fetchPage(`${this.baseUrl}/401349/vcl-controls`);
-        return this.parser.parseLibraryList(html);
+        const allLibraries: { name: string; url: string }[] = [];
+        const seen = new Set<string>();
+
+        // DevExpress VCL 各套件入口页面
+        const entryPages = [
+            `${this.baseUrl}/401349/vcl-controls`,      // VCL Controls
+            `${this.baseUrl}/1000/expressbars`,         // ExpressBars (dxBar)
+            `${this.baseUrl}/11385/expressnavbar`,      // ExpressNavBar
+            `${this.baseUrl}/11386/expresslayout-control`, // ExpressLayout
+            `${this.baseUrl}/11382/expressprinting-system`, // ExpressPrinting
+            `${this.baseUrl}/11380/expressquantumgrid`, // ExpressQuantumGrid (cxGrid)
+            `${this.baseUrl}/11383/expressscheduler`,   // ExpressScheduler
+            `${this.baseUrl}/11381/expressspreadsheet`, // ExpressSpreadSheet
+            `${this.baseUrl}/11378/expressskins`,       // ExpressSkins
+        ];
+
+        for (const page of entryPages) {
+            try {
+                const html = await this.fetchPage(page);
+                const libs = this.parser.parseLibraryList(html);
+                for (const lib of libs) {
+                    if (!seen.has(lib.url)) {
+                        seen.add(lib.url);
+                        allLibraries.push(lib);
+                    }
+                }
+            } catch (error) {
+                console.error(`  Failed to fetch entry page ${page}: ${(error as Error).message}`);
+            }
+        }
+
+        return allLibraries;
     }
 
     /**
@@ -92,7 +122,7 @@ export class DevExpressCrawler extends BaseCrawler {
             classDoc.members = members;
         } catch {
             // 成员页面可能不存在
-            console.log(`    No members page for ${classDoc.name}`);
+            console.error(`    No members page for ${classDoc.name}`);
         }
 
         return classDoc;

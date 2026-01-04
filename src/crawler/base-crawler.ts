@@ -48,12 +48,12 @@ export abstract class BaseCrawler {
 
         // 检查缓存
         if (!forceRefresh && await fs.pathExists(cachePath)) {
-            console.log(`[Cache Hit] ${url}`);
+            console.error(`[Cache Hit] ${url}`);
             return fs.readFile(cachePath, 'utf-8');
         }
 
         // 请求页面
-        console.log(`[Fetching] ${url}`);
+        console.error(`[Fetching] ${url}`);
 
         let lastError: Error | null = null;
         for (let attempt = 1; attempt <= this.config.maxRetries; attempt++) {
@@ -102,7 +102,7 @@ export abstract class BaseCrawler {
         await fs.ensureDir(dir);
         const filepath = path.join(dir, `${filename}.json`);
         await fs.writeJson(filepath, doc, { spaces: 2 });
-        console.log(`[Saved] ${subDir}/${filename}.json`);
+        console.error(`[Saved] ${subDir}/${filename}.json`);
     }
 
     /**

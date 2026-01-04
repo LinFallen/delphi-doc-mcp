@@ -39,11 +39,12 @@ export class AutoCrawler {
             return true;
         }
 
-        // Check if there are any JSON files
+        // Check if there are any JSON files for each source
         const hasDevExpress = await this.hasJsonFiles(path.join(docsDir, 'devexpress'));
         const hasFpc = await this.hasJsonFiles(path.join(docsDir, 'fpc'));
 
-        return !hasDevExpress && !hasFpc;
+        // Return true if ANY source is missing (use OR, not AND)
+        return !hasDevExpress || !hasFpc;
     }
 
     /**
